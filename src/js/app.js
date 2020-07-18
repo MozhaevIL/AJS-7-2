@@ -1,13 +1,12 @@
-export default class Validator {
-  static validateUsername(username) {
-    if (!(username.match(/^[A-Za-z0-9\-_]+$/))) {
-      throw new Error('Недопустимые символы');
-    }
-    if (!(username.match(/^[A-Za-z]+.*[A-Za-z]+$/))) {
-      throw new Error('Имя должно начинаться и заканчиваться буквой');
-    }
-    if (/\d{4}/.test(username)) {
-      throw new Error('Не допускается использование более 3 цифр подряд');
-    }
+export default function phoneNumberFormat(number) {
+  const numberNumeric = number.replace(/[^\d]+/g, '');
+  const numberWithoutCountry = numberNumeric.substr(-10, 10);
+  let countryCode = numberNumeric.substr(0, numberNumeric.length - 10);
+
+  if (countryCode === '8') {
+    countryCode = '7';
   }
+  countryCode = `+${countryCode}`;
+
+  return `${countryCode}${numberWithoutCountry}`;
 }

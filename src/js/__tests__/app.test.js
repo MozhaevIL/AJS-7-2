@@ -1,37 +1,25 @@
-import Validator from '../app';
+import phoneNumberFormat from '../app';
 
-test('must throw an error if username contains non-latin letters', () => {
-  expect(() => {
-    Validator.validateUsername('Игор');
-  }).toThrow('Недопустимые символы');
+test('must convert phone number into correct format', () => {
+  const input = '8 (927) 000-00-00';
+  const expected = '+79270000000';
+  const recieved = phoneNumberFormat(input);
+
+  expect(recieved).toBe(expected);
 });
 
-test('must throw an error if username contains invalid symbols', () => {
-  expect(() => {
-    Validator.validateUsername('igor!igor');
-  }).toThrow('Недопустимые символы');
+test('must convert phone number into correct format', () => {
+  const input = '+7 960 000 00 00';
+  const expected = '+79600000000';
+  const recieved = phoneNumberFormat(input);
+
+  expect(recieved).toBe(expected);
 });
 
-test('must throw an error if username starts with non-letter', () => {
-  expect(() => {
-    Validator.validateUsername('1igor');
-  }).toThrow('Имя должно начинаться и заканчиваться буквой');
-});
+test('must convert phone number into correct format', () => {
+  const input = '+86 000 000 0000';
+  const expected = '+860000000000';
+  const recieved = phoneNumberFormat(input);
 
-test('must throw an error if username ends with non-letter', () => {
-  expect(() => {
-    Validator.validateUsername('igor1');
-  }).toThrow('Имя должно начинаться и заканчиваться буквой');
-});
-
-test('must throw an error if username contains more then 3 digits in a row', () => {
-  expect(() => {
-    Validator.validateUsername('igor1234igor');
-  }).toThrow('Не допускается использование более 3 цифр подряд');
-});
-
-test('must not throw an error if username is valid', () => {
-  expect(() => {
-    Validator.validateUsername('igor-123_igor');
-  }).not.toThrow();
+  expect(recieved).toBe(expected);
 });
